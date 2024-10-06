@@ -181,18 +181,24 @@
             const popup = document.getElementById('feedbackPopup');
 
             if (answer === correctAnswer) {
-                feedbackMessage.innerHTML = '<span class="result-icon">✅</span> Correct! Let´s keep learning!';
                 correctAnswered = true;
                 correctAnswersCount++;
-                document.querySelector('.next-btn').style.display = 'block';
-                document.querySelector('.close-btn').style.display = 'none';
+
+                // If it's the fourth correct answer, skip the popup and go directly to the completion screen
+                if (correctAnswersCount === 4) {
+                    showCompletionPopup();
+                } else {
+                    feedbackMessage.innerHTML = '<span class="result-icon">✅</span> Correct! Let´s keep learning!';
+                    document.querySelector('.next-btn').style.display = 'block';
+                    document.querySelector('.close-btn').style.display = 'none';
+                    popup.classList.add('show');
+                }
             } else {
                 feedbackMessage.innerHTML = '<span class="result-icon">❌</span> Oops! Try again.';
                 document.querySelector('.close-btn').style.display = 'block';
                 document.querySelector('.next-btn').style.display = 'none';
+                popup.classList.add('show');
             }
-
-            popup.classList.add('show');
         }
 
         function closePopup() {
@@ -208,11 +214,6 @@
             }
 
             currentQuestion++;
-            if (currentQuestion >= satelliteImages.length || correctAnswersCount === 4) {
-                showCompletionPopup();
-                return;
-            }
-
             loadImage();
             const popup = document.getElementById('feedbackPopup');
             popup.classList.remove('show');
