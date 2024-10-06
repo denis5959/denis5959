@@ -75,7 +75,7 @@
             border-radius: 5px;
             padding: 10px 20px;
             cursor: pointer;
-            margin-top: 10px; /* Add margin for spacing */
+            margin-top: 10px; /* Añadimos margen para el espaciado */
         }
         .popup .close-btn:hover, .popup .next-btn:hover {
             background-color: #642bc0;
@@ -116,12 +116,11 @@
     <script>
         // Array to hold local image paths, correct answers, and possible incorrect answers
         const satelliteImages = [
-            { url: 'images/Mexico.jpeg', correct: 'Altitude difference', wrong: ['Sea level', 'Mountains'] },
-            { url: 'images/deforestation.png', correct: 'Urbanization', wrong: ['Clouds', 'Forest growth'] },
-            { url: 'images/cloudCover.jpg', correct: 'Cloud cover', wrong: ['Water', 'Forest'] },
-            { url: 'images/floods.png', correct: 'Flooded area', wrong: ['Snow', 'City'] },
-            { url: 'images/desert.png', correct: 'Desert', wrong: ['Ocean', 'River'] },
-            { url: 'images/storm.png', correct: 'Hurricane', wrong: ['Rain', 'Windstorm'] }
+            { url: 'images/thermical.jpeg', correct: 'Thermical analysis', wrong: ['Sea level', 'Pollution'] },
+            { url: 'images/mexico.png', correct: 'Altitude Level', wrong: ['Clouds', 'Pollution'] },
+            { url: 'images/pollution.jpg', correct: 'Pollution', wrong: ['Water', 'Urban analysis'] },
+            { url: 'images/deforestation.png', correct: 'Deforestation', wrong: ['Snow', 'Heating index'] },
+           
         ];
 
         let currentQuestion = 0;
