@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Weather Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ce99fc;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .game-container {
+            margin: 20px auto;
+            width: 60%;
+            border: 2px solid #7609d6;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            display: none; /* Hide the game container initially */
+        }
+        .satellite-image {
+            width: 100%;
+            border-radius: 10px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05); /* Slight zoom-in on hover */
+        }
+        button:active {
+            transform: scale(0.95); /* Slight shrink on click */
+        }
+        /* Style for the title screen */
+        .title-screen {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .title-image {
+            width: 50%;
+            border-radius: 10px;
+        }
+        /* Style for the pop-up message */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000; /* On top of other elements */
+        }
+        .popup.show {
+            display: block; /* Show when triggered */
+        }
+        .popup .close-btn, .popup .next-btn {
+            border: none;
+            background-color: #6b30c9;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px; /* Add margin for spacing */
+        }
+        .popup .close-btn:hover, .popup .next-btn:hover {
+            background-color: #642bc0;
+        }
+        .result-icon {
+            font-size: 30px; /* Size for checkmark and cross */
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Title screen section with a picture -->
+    <div class="title-screen" id="titleScreen">
+        <h1>Welcome to Relieveum!</h1>
+        <img src="images/title-image.png" alt="Weather Satellite" class="title-image">
+        <br>
+        <button onclick="startGame()">Start Game</button> <!-- Start Game button -->
+    </div>
+
+    <h1>Learn About Satellites and Weather!</h1>
+    <div class="game-container" id="gameContainer">
+        <div id="question">
+            <h2>What does this satellite image show?</h2>
+            <img src="" id="satelliteImg" class="satellite-image" alt="Satellite Image">
+            <div id="answers">
+                <!-- Buttons for answers will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup for result feedback -->
+    <div class="popup" id="feedbackPopup">
+        <span id="feedbackMessage"></span>
+        <button class="close-btn" onclick="closePopup()" style="display:none;">Close</button>
+        <button class="next-btn" onclick="nextQuestion()" style="display:none;">Next</button>
+    </div>
+
+    <script>
+        // Array to hold local image paths, correct answers, and possible incorrect answers
+        const satelliteImages = [
+            { url: 'images/Mexico.jpeg', correct: 'Altitude difference', wrong: ['Sea level', 'Mountains'] },
+            { url: 'images/deforestation.png', correct: 'Urbanization', wrong: ['Clouds', 'Forest growth'] },
+            { url: 'images/cloudCover.jpg', correct: 'Cloud cover', wrong: ['Water', 'Forest'] },
+            { url: 'images/floods.png', correct: 'Flooded area', wrong: ['Snow', 'City'] },
+            { url: 'images/desert.png', correct: 'Desert', wrong: ['Ocean', 'River'] },
+            { url: 'images/storm.png', correct: 'Hurricane', wrong: ['Rain', 'Windstorm'] }
+        ];
+
+        let currentQuestion = 0;
+        let correctAnswered = false; // Track if the correct answer is selected
+
+        // Function to start the game and hide the title screen
+        function startGame() {
+            document.getElementById('titleScreen').style.display = 'none';  // Hide the title screen
+            document.getElementById('gameContainer').style.display = 'block';  // Show the game container
+            loadImage();  // Load the first image
+        }
+
+        // Function to load the current image and generate answer buttons
+        function loadImage() {
+            const img = document.getElementById('satelliteImg');
+            const currentImage = satelliteImages[currentQuestion];
+            img.src = currentImage.url;
+
+            // Randomize the answers
+            const allAnswers = [currentImage.correct, ...currentImage.wrong].sort(() => Math.random() - 0.5);
+            
+            const answersContainer = document.getElementById('answers');
+            answersContainer.innerHTML = ''; // Clear previous buttons
+
+            // Generate buttons for each answer
+            allAnswers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.onclick = () => checkAnswer(answer);
+                answersContainer.appendChild(button);
+            });
+
+            correctAnswered = false; // Reset correct answer flag
+        }
+
+        // Function to check the answer
+        function checkAnswer(answer) {
+            const correctAnswer = satelliteImages[currentQuestion].correct;
+            const feedbackMessage = document.getElementById('feedbackMessage');
+            const popup = document.getElementById('feedbackPopup');
+
+            if (answer === correctAnswer) {
+                feedbackMessage.innerHTML = '<span class="result-icon">✅</span> Correct! Let´s keep learning!';
+                correctAnswered = true; // Set flag to true when correct answer is selected
+                document.querySelector('.next-btn').style.display = 'block'; // Show "Next" button
+                document.querySelector('.close-btn').style.display = 'none'; // Hide "Close" button
+            } else {
+                feedbackMessage.innerHTML = '<span class="result-icon">❌</span> Oops! Try again.';
+                document.querySelector('.close-btn').style.display = 'block'; // Show "Close" button
+                document.querySelector('.next-btn').style.display = 'none'; // Hide "Next" button
+            }
+
+            // Show the popup with feedback
+            popup.classList.add('show');
+        }
+
+        // Function to close the feedback popup
+        function closePopup() {
+            const popup = document.getElementById('feedbackPopup');
+            popup.classList.remove('show'); // Hide the popup
+            loadImage(); // Reload the image and reset answer buttons
+        }
+
+        // Function to go to the next question
+        function nextQuestion() {
+            if (!correctAnswered) {
+                alert("Please select the correct answer before moving to the next question.");
+                return; // Do not allow moving to the next question unless the correct answer is selected
+            }
+
+            currentQuestion++;
+            if (currentQuestion >= satelliteImages.length) {
+                alert("You completed the game! You've learned about satellites and weather forecasting!");
+                currentQuestion = 0;  // Reset to the first question
+            }
+
+            loadImage();
+            const popup = document.getElementById('feedbackPopup');
+            popup.classList.remove('show'); // Hide the popup
+        }
+    </script>
+</body>
+</html>
