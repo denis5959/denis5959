@@ -20,7 +20,7 @@
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
-            display: none; /* Hide the game container initially */
+            display: none; /* Oculta las prguntas */
         }
         .satellite-image {
             width: 100%;
@@ -38,12 +38,12 @@
         }
         button:hover {
             background-color: #2980b9;
-            transform: scale(1.05); /* Slight zoom-in on hover */
+            transform: scale(1.05); /* Un poco de zoom */
         }
         button:active {
-            transform: scale(0.95); /* Slight shrink on click */
+            transform: scale(0.95); /* Hacer los botones interactivos al pasar el mouse */
         }
-        /* Style for the title screen */
+        /* Estética del inicio */
         .title-screen {
             margin-top: 30px;
             text-align: center;
@@ -52,7 +52,7 @@
             width: 50%;
             border-radius: 10px;
         }
-        /* Style for the pop-up message */
+        /* Estilo de la alerta  */
         .popup {
             display: none; /* Hidden by default */
             position: fixed;
@@ -63,10 +63,10 @@
             border: 2px solid #3498db;
             border-radius: 10px;
             padding: 20px;
-            z-index: 1000; /* On top of other elements */
+            z-index: 1000; 
         }
         .popup.show {
-            display: block; /* Show when triggered */
+            display: block; /* Aparece cuando se activa */
         }
         .popup .close-btn, .popup .next-btn {
             border: none;
@@ -81,18 +81,18 @@
             background-color: #642bc0;
         }
         .result-icon {
-            font-size: 30px; /* Size for checkmark and cross */
+            font-size: 30px; /* Tamaño de la palomita y la cruz */
             margin-right: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Title screen section with a picture -->
+    <!-- Configuración del título -->
     <div class="title-screen" id="titleScreen">
         <h1>Learn about Satellites and Weather!</h1>
         <img src="images/title-image.png" alt="Weather Satellite" class="title-image">
         <br>
-        <button onclick="startGame()">Start Game</button> <!-- Start Game button -->
+        <button onclick="startGame()">Start Game</button> <!-- Botón para mostrar las preguntas -->
     </div>
 
     
@@ -101,12 +101,12 @@
             <h2>What does this satellite image show?</h2>
             <img src="" id="satelliteImg" class="satellite-image" alt="Satellite Image">
             <div id="answers">
-                <!-- Buttons for answers will be dynamically generated -->
+                <!-- Los botones se generan automáticamente -->
             </div>
         </div>
     </div>
 
-    <!-- Popup for result feedback -->
+    <!--Alertas del resultado -->
     <div class="popup" id="feedbackPopup">
         <span id="feedbackMessage"></span>
         <button class="close-btn" onclick="closePopup()" style="display:none;">Close</button>
@@ -114,7 +114,7 @@
     </div>
 
     <script>
-        // Array to hold local image paths, correct answers, and possible incorrect answers
+        // Arreglo para guardar el valor de la respuesta correcta en base a la pregunta en pantalla
         const satelliteImages = [
             { url: 'images/thermical.jpeg', correct: 'Thermical analysis', wrong: ['Sea level', 'Pollution'] },
             { url: 'images/country.png', correct: 'Cloud covering', wrong: ['Altitude Level', 'Pollution'] },
@@ -124,28 +124,28 @@
         ];
 
         let currentQuestion = 0;
-        let correctAnswered = false; // Track if the correct answer is selected
+        let correctAnswered = false;
 
-        // Function to start the game and hide the title screen
+        
         function startGame() {
             document.getElementById('titleScreen').style.display = 'none';  // Hide the title screen
             document.getElementById('gameContainer').style.display = 'block';  // Show the game container
             loadImage();  // Load the first image
         }
 
-        // Function to load the current image and generate answer buttons
+        // Método para cargar imagen y pregunta
         function loadImage() {
             const img = document.getElementById('satelliteImg');
             const currentImage = satelliteImages[currentQuestion];
             img.src = currentImage.url;
 
-            // Randomize the answers
+            // Hacer aleatorias las respuestas
             const allAnswers = [currentImage.correct, ...currentImage.wrong].sort(() => Math.random() - 0.5);
             
             const answersContainer = document.getElementById('answers');
             answersContainer.innerHTML = ''; // Clear previous buttons
 
-            // Generate buttons for each answer
+            
             allAnswers.forEach(answer => {
                 const button = document.createElement('button');
                 button.textContent = answer;
@@ -153,10 +153,10 @@
                 answersContainer.appendChild(button);
             });
 
-            correctAnswered = false; // Reset correct answer flag
+            correctAnswered = false;
         }
 
-        // Function to check the answer
+        // Método para checar la respuesta
         function checkAnswer(answer) {
             const correctAnswer = satelliteImages[currentQuestion].correct;
             const feedbackMessage = document.getElementById('feedbackMessage');
@@ -173,33 +173,33 @@
                 document.querySelector('.next-btn').style.display = 'none'; // Hide "Next" button
             }
 
-            // Show the popup with feedback
+            
             popup.classList.add('show');
         }
 
-        // Function to close the feedback popup
+        // Método para cerrar la alerta
         function closePopup() {
             const popup = document.getElementById('feedbackPopup');
             popup.classList.remove('show'); // Hide the popup
             loadImage(); // Reload the image and reset answer buttons
         }
 
-        // Function to go to the next question
+        // Para pasar la siguiente pregunta tienes que contestar bien
         function nextQuestion() {
             if (!correctAnswered) {
                 alert("Please select the correct answer before moving to the next question.");
-                return; // Do not allow moving to the next question unless the correct answer is selected
+                return; 
             }
 
             currentQuestion++;
             if (currentQuestion >= satelliteImages.length) {
                 alert("You completed the game! You've learned about satellites and weather forecasting!");
-                currentQuestion = 0;  // Reset to the first question
+                currentQuestion = 0;  // Resetea a la primera pregunta
             }
 
             loadImage();
             const popup = document.getElementById('feedbackPopup');
-            popup.classList.remove('show'); // Hide the popup
+            popup.classList.remove('show'); // Oculta la alerta
         }
     </script>
 </body>
