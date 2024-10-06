@@ -125,7 +125,7 @@
 
         let currentQuestion = 0;
         let correctAnswered = false;
-
+        let correctAnswersCount = 0;
         
         function startGame() {
             document.getElementById('titleScreen').style.display = 'none';  // Hide the title screen
@@ -164,13 +164,14 @@
 
             if (answer === correctAnswer) {
                 feedbackMessage.innerHTML = '<span class="result-icon">✅</span> Correct! Let´s keep learning!';
-                correctAnswered = true; // Set flag to true when correct answer is selected
-                document.querySelector('.next-btn').style.display = 'block'; // Show "Next" button
-                document.querySelector('.close-btn').style.display = 'none'; // Hide "Close" button
+                correctAnswered = true; 
+                correctAnswersCount++; 
+                document.querySelector('.next-btn').style.display = 'block'; 
+                document.querySelector('.close-btn').style.display = 'none'; 
             } else {
                 feedbackMessage.innerHTML = '<span class="result-icon">❌</span> Oops! Try again.';
-                document.querySelector('.close-btn').style.display = 'block'; // Show "Close" button
-                document.querySelector('.next-btn').style.display = 'none'; // Hide "Next" button
+                document.querySelector('.close-btn').style.display = 'block'; 
+                document.querySelector('.next-btn').style.display = 'none'; 
             }
 
             
@@ -192,7 +193,7 @@
             }
 
             currentQuestion++;
-            if (currentQuestion >= satelliteImages.length) {
+            if (currentQuestion >= satelliteImages.length  || correctAnswersCount === 4) {
                 alert("You completed the game! You've learned about satellites and weather forecasting!");
                 currentQuestion = 0;  // Resetea a la primera pregunta
             }
