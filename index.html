@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #ce99fc;
+            background-color: #c2f0e6; /* Light greenish background */
         }
         h1 {
             color: #2c3e50;
@@ -16,9 +16,9 @@
         .game-container {
             margin: 20px auto;
             width: 60%;
-            border: 2px solid #7609d6;
+            border: 2px solid #29b6f6; /* Light blue border */
             padding: 20px;
-            background-color: #fff;
+            background-color: #ffffff;
             border-radius: 10px;
             display: none;
         }
@@ -30,14 +30,14 @@
             margin: 10px;
             padding: 10px 20px;
             border: none;
-            background-color: #3498db;
+            background-color: #29b6f6; /* Light blue buttons */
             color: white;
             border-radius: 5px;
             cursor: pointer;
             transition: transform 0.2s ease, background-color 0.2s ease;
         }
         button:hover {
-            background-color: #2980b9;
+            background-color: #0288d1; /* Darker blue on hover */
             transform: scale(1.05);
         }
         button:active {
@@ -55,10 +55,10 @@
             display: none;
             position: fixed;
             left: 50%;
-            top: 50%;
+            top: 30%; /* Lowered so it doesn't overlap */
             transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 2px solid #3498db;
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 2px solid #29b6f6;
             border-radius: 10px;
             padding: 20px;
             z-index: 1000;
@@ -68,7 +68,7 @@
         }
         .popup .close-btn, .popup .next-btn {
             border: none;
-            background-color: #6b30c9;
+            background-color: #0288d1;
             color: white;
             border-radius: 5px;
             padding: 10px 20px;
@@ -76,7 +76,7 @@
             margin-top: 10px;
         }
         .popup .close-btn:hover, .popup .next-btn:hover {
-            background-color: #642bc0;
+            background-color: #01579b;
         }
         .result-icon {
             font-size: 30px;
@@ -87,9 +87,9 @@
             display: none;
             position: fixed;
             left: 50%;
-            top: 50%;
+            top: 50%; /* Positioned lower */
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 128, 128, 0.9); /* Blue-greenish background */
             color: white;
             padding: 20px;
             border-radius: 10px;
@@ -99,10 +99,10 @@
             display: block;
         }
         .completion-popup button {
-            background-color: #e74c3c;
+            background-color: #00897b;
         }
         .completion-popup button:hover {
-            background-color: #c0392b;
+            background-color: #00695c;
         }
     </style>
 </head>
